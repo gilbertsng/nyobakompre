@@ -11,7 +11,7 @@
             account_status,                                                                                          
             open_date                                                                                                
         from source_data                                                                                             
-        -- ⚠️ KESALAHAN DE: Lupa menambahkan filter: where account_status = 'DORMANT'                                
+        where account_status = 'DORMANT'                                  
     )                                                                                                                
                                                                                                                      
     select * from transformed                                                                                        
