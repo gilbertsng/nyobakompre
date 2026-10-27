@@ -1,0 +1,20 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+
+# dbt
+target/
+dbt_packages/
+logs/
+.user.yml
+
+# DuckDB database files
+*.duckdb
+*.duckdb.wal
+*.duckdb.tmp
+
+# OS & IDE
+.DS_Store
+.idea/
+.vscode/

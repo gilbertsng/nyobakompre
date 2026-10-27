@@ -1,0 +1,6 @@
+customer_id,customer_name,email,kyc_status,created_at
+CUST001,Budi Santoso,budi.santoso@email.com,VERIFIED,2024-01-10 08:30:00
+CUST002,Siti Rahma,siti.rahma@email.com,VERIFIED,2024-01-15 09:15:00
+CUST003,Andi Wijaya,andi.wijaya@email.com,PENDING,2024-02-01 11:00:00
+CUST004,Dewi Lestari,dewi.lestari@email.com,VERIFIED,2024-02-20 14:20:00
+CUST005,Rian Pratama,rian.pratama@email.com,REJECTED,2024-03-05 16:45:00

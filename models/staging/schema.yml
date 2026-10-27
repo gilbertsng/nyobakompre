@@ -1,0 +1,81 @@
+version: 2
+
+models:
+  - name: stg_customers
+    description: "Tabel staging untuk data nasabah bank setelah standarisasi."
+    columns:
+      - name: customer_id
+        description: "Primary key nasabah bank."
+        tests:
+          - unique
+          - not_null
+      - name: customer_name
+        description: "Nama lengkap nasabah."
+        tests:
+          - not_null
+      - name: kyc_status
+        description: "Status KYC (Know Your Customer) nasabah."
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['VERIFIED', 'PENDING', 'REJECTED']
+
+  - name: stg_accounts
+    description: "Tabel staging untuk rekening nasabah."
+    columns:
+      - name: account_id
+        description: "Primary key rekening nasabah."
+        tests:
+          - unique
+          - not_null
+      - name: customer_id
+        description: "Foreign key yang merujuk ke tabel stg_customers."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_customers')
+              field: customer_id
+      - name: account_type
+        description: "Tipe rekening."
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['SAVINGS', 'CURRENT', 'DEPOSIT']
+      - name: account_status
+        description: "Status keaktifan rekening."
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['ACTIVE', 'DORMANT', 'CLOSED']
+
+  - name: stg_transactions
+    description: "Tabel staging transaksi keuangan nasabah."
+    columns:
+      - name: transaction_id
+        description: "Primary key transaksi."
+        tests:
+          - unique
+          - not_null
+      - name: account_id
+        description: "Foreign key ke tabel stg_accounts."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_accounts')
+              field: account_id
+      - name: transaction_type
+        description: "Jenis mutasi transaksi (CREDIT / DEBIT)."
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['CREDIT', 'DEBIT']
+      - name: amount
+        description: "Nominal transaksi."
+        tests:
+          - not_null
+      - name: transaction_status
+        description: "Status keberhasilan transaksi."
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['SUCCESS', 'FAILED']

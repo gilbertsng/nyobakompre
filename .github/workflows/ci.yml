@@ -1,0 +1,56 @@
+name: dbt CI/CD Pipeline (Maker-Checker-Signer Automated Gate)
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  dbt-validation:
+    name: "Automated dbt Validation (CI Gatekeeper)"
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 1. Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: 2. Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: 3. Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: 4. Test dbt & DuckDB Connection (dbt debug)
+        run: |
+          dbt debug --profiles-dir . --target ci
+
+      - name: 5. Load Seed Data (dbt seed)
+        run: |
+          dbt seed --profiles-dir . --target ci
+
+      - name: 6. Compile SQL & Jinja Models (dbt compile)
+        run: |
+          dbt compile --profiles-dir . --target ci
+
+      - name: 7. Execute Data Transformations (dbt run)
+        run: |
+          dbt run --profiles-dir . --target ci
+
+      - name: 8. Run Data Quality & Governance Tests (dbt test)
+        run: |
+          dbt test --profiles-dir . --target ci
+
+      - name: 9. CI Summary Report
+        if: always()
+        run: |
+          echo "### 🏦 dbt CI/CD Gatekeeper Status" >> $GITHUB_STEP_SUMMARY
+          echo "Hasil validasi otomatis untuk model perbankan dbt." >> $GITHUB_STEP_SUMMARY
+          echo "- **Status Workflow**: ${{ job.status }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Target Database**: DuckDB (In-Memory CI Runner)" >> $GITHUB_STEP_SUMMARY
+          echo "- **Pintu Maker-Checker**: Hanya jika status hijau (Success), Checker & Signer dapat melakukan Approval." >> $GITHUB_STEP_SUMMARY
