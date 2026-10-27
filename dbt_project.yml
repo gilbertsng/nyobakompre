@@ -5,11 +5,7 @@ config-version: 2
 profile: 'banking_analytics'
 
 model-paths: ["models"]
-analysis-paths: ["analyses"]
-test-paths: ["tests"]
 seed-paths: ["seeds"]
-macro-paths: ["macros"]
-snapshot-paths: ["snapshots"]
 
 clean-targets:
   - "target"
@@ -17,9 +13,5 @@ clean-targets:
 
 models:
   banking_analytics:
-    staging:
-      +materialized: view
-    marts:
-      +materialized: table
     tickets:
       +materialized: table

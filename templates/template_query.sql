@@ -2,25 +2,25 @@
 -- TEMPLATE QUERY DBT (DATA ENGINEERING PERBANKAN)
 -- ==============================================================================
 -- Petunjuk DE:
--- 1. Gunakan format CTE (Common Table Expressions) dengan ref() ke staging/marts.
--- 2. Terapkan pembersihan data (trim, casting tipe data yang tepat).
--- 3. Pastikan kolom Primary Key bernilai unik dan tidak null.
+-- 1. Gunakan ref() untuk mengambil tabel sumber (contoh: raw_accounts, raw_customers).
+-- 2. Terapkan logika query sesuai kebutuhan tiket.
+-- 3. Pastikan kolom Primary Key unik dan tidak bernilai NULL.
 -- ==============================================================================
 
 with source_data as (
-    -- Ganti dengan model acuan yang dibutuhkan tiket (contoh: stg_customers, stg_accounts, dll)
-    select * from {{ ref('stg_customers') }}
+    -- Ganti nama tabel sumber yang dibutuhkan tiket di sini
+    select * from {{ ref('raw_accounts') }}
 ),
 
 transformed as (
     select
-        -- Deklarasikan kolom-kolom yang diminta tiket bisnis di sini
+        account_id,
         customer_id,
-        customer_name,
-        email,
-        kyc_status,
-        created_at
+        account_type,
+        account_status,
+        open_date
     from source_data
+    -- Tambahkan filter atau transformasi sesuai tiket
 )
 
 select * from transformed
