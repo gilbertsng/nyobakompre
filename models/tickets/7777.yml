@@ -1,0 +1,18 @@
+version: 2
+
+models:
+  - name: "7777"
+    description: "Tabel monitoring khusus rekening berstatus DORMANT untuk kepatuhan bank."
+    columns:
+      - name: account_id
+        description: "Primary key rekening nasabah."
+        tests:
+          - unique
+          - not_null
+
+      - name: account_status
+        description: "Status rekening. Wajib bernilai DORMANT."
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['DORMANT']
