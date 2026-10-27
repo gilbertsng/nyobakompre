@@ -1,0 +1,27 @@
+# ==============================================================================
+# TEMPLATE SCHEMA DBT (DATA GOVERNANCE & QUALITY STANDARD)
+# ==============================================================================
+# Petunjuk DE:
+# 1. Sesuaikan nama model di bawah dengan nama file query .sql tiket kamu.
+# 2. Wajib mengisi 'description' pada tingkat model dan kolom utama.
+# 3. Primary Key wajib memiliki tests: [unique, not_null].
+# 4. Kolom status/kategori wajib memiliki tests: accepted_values.
+# ==============================================================================
+
+version: 2
+
+models:
+  - name: nama_model_tiket_anda
+    description: "Deskripsi tujuan pembentukan tabel berdasarkan tiket bisnis perbankan."
+    columns:
+      - name: id_kolom_primary_key
+        description: "Primary key unik untuk tabel ini."
+        tests:
+          - unique
+          - not_null
+      - name: kolom_status
+        description: "Status data (wajib didefinisikan domain nilainya)."
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['STATUS_A', 'STATUS_B']

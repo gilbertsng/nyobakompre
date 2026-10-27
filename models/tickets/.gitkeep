@@ -1,0 +1,5 @@
+# Folder ini akan menampung folder tiket-tiket dari Data Engineer
+# Contoh struktur:
+# models/tickets/TICKET_101_high_risk_customers/
+#   ├── TICKET_101_high_risk_customers.sql
+#   └── TICKET_101_high_risk_customers.yml
